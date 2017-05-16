@@ -1,96 +1,57 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  
-  <title>浅谈MVP | 居合子的博客</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Model-view-presenter，简称MVP，是电脑软件设计工程中一种对针对MVC模式，再审议后所延伸提出的一种软件设计模式。  描述 M-Model，数据层  V-View，界面显示层  P-Presenter，中介者，连接Model和View层   结构图如下：  从图中可以看到，View可以和Presenter进行双向通信，Presenter和Model进行单方面通信，而View和">
-<meta name="keywords" content="Android">
-<meta property="og:type" content="article">
-<meta property="og:title" content="浅谈MVP">
-<meta property="og:url" content="http://yoursite.com/2017/05/16/androidmvp/index.html">
-<meta property="og:site_name" content="居合子的博客">
-<meta property="og:description" content="Model-view-presenter，简称MVP，是电脑软件设计工程中一种对针对MVC模式，再审议后所延伸提出的一种软件设计模式。  描述 M-Model，数据层  V-View，界面显示层  P-Presenter，中介者，连接Model和View层   结构图如下：  从图中可以看到，View可以和Presenter进行双向通信，Presenter和Model进行单方面通信，而View和">
-<meta property="og:image" content="https://www.processon.com/chart_image/58b93d6ee4b0bb529f1ecca6.png">
-<meta property="og:image" content="https://www.processon.com/chart_image/58b95e57e4b0bb529f1fca2a.png">
-<meta property="og:image" content="https://dn-mhke0kuv.qbox.me/92331a97d41d52f89da0.PNG">
-<meta property="og:updated_time" content="2017-05-16T07:35:52.735Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈MVP">
-<meta name="twitter:description" content="Model-view-presenter，简称MVP，是电脑软件设计工程中一种对针对MVC模式，再审议后所延伸提出的一种软件设计模式。  描述 M-Model，数据层  V-View，界面显示层  P-Presenter，中介者，连接Model和View层   结构图如下：  从图中可以看到，View可以和Presenter进行双向通信，Presenter和Model进行单方面通信，而View和">
-<meta name="twitter:image" content="https://www.processon.com/chart_image/58b93d6ee4b0bb529f1ecca6.png">
-  
-    <link rel="alternate" href="/atom.xml" title="居合子的博客" type="application/atom+xml">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>浅谈MVP | Juhezi&#39;s blog</title>
+  <meta name="description" content="I am a slow walker, but i never walk backwards." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="https://material.io/icons/static/images/icons-192x192.png" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Juhezi's blog">
+
   
   
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
   
 
+  
 </head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">居合子的博客</a>
-      </h1>
-      
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(//blog.ghost.org/content/images/2013/Nov/cover.png)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="https://material.io/icons/webcomponents/custom_components/material-io-nav/static/images/icons_light.svg" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Juhezi's blog</h1>
+            <h2 class="blog-description">I am a slow walker, but i never walk backwards.</h2>
+        </div>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
 </header>
-      <div class="outer">
-        <section id="main"><article id="post-androidmvp" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/16/androidmvp/" class="article-date">
-  <time datetime="2017-05-16T07:27:53.000Z" itemprop="datePublished">2017-05-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      浅谈MVP
-    </h1>
   
 
-      </header>
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-05-16T07:27:53.000Z" itemprop="datePublished">
+          2017-05-16
+      </time>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
+    
+    | 
+    <a href='/tags/Android/'>Android</a>
+    
+    
+</span>
+    <h1 class="post-title">浅谈MVP</h1>
+    <section class="post-content">
+      <blockquote>
 <p>Model-view-presenter，简称MVP，是电脑软件设计工程中一种对针对MVC模式，再审议后所延伸提出的一种软件设计模式。</p>
 </blockquote>
 <h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><ul>
@@ -168,130 +129,68 @@
 <p>Presenter可以重用，所以不需要每个Activity或者Fragment都为其分配一套MVP，可以几个Activity或者Fragment共用一个Presenter。</p>
 <p>想要了解更多的话，请移步本人的<a href="https://github.com/qiaoyunrui/StudyNote" target="_blank" rel="external">学习笔记</a>，如果觉得有帮助的话，请点一个star✨。</p>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/16/androidmvp/" data-id="cj2r94cut000028yjct7qqcgu" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/05/16/android-touch-event-dispatch/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Android 事件分发机制
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/05/16/tablayoutandviewpager/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">TabLayout与ViewPager的联合使用</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Juhezi</h4>
+    <p>A designer, developer and entrepreneur. Spends his time travelling the world with a bag of kites. Likes journalism and publishing platforms.</p>
 </section>
-        
-          <aside id="sidebar">
-  
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/05/16/androidmvp/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/05/16/androidmvp/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/05/16/androidmvp/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
     
-
-  
+    <a class="newer-posts" href="/2017/05/16/android-touch-event-dispatch/">
+        ← Android 事件分发机制
+    </a>
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li></ul>
-    </div>
-  </div>
-
-
-  
+    <span class="page-number">•</span>
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 10px;">Android</a>
-    </div>
-  </div>
-
-  
+    <a class="older-posts" href="/2017/05/16/tablayoutandviewpager/">
+        TabLayout与ViewPager的联合使用 →
+    </a>
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
-    </div>
-  </div>
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
 
-
-  
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/05/16/android-touch-event-dispatch/">Android 事件分发机制</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/16/androidmvp/">浅谈MVP</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/16/tablayoutandviewpager/">TabLayout与ViewPager的联合使用</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+</div>
+</main>
+
 
   
-</aside>
-        
-      </div>
-      <footer id="footer">
+<footer class="site-footer">
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 Juhezi<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Juhezi's blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
   </div>
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js"></script>
 
-  </div>
+
 </body>
 </html>
