@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>费马小定理检测素数 | Juhezi&#39;s blog</title>
+  <meta name="description" content="I am a slow walker, but I never walk backwards." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="http://i2.muimg.com/588926/2b80267e202416bc.png" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Juhezi's blog">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://i4.buimg.com/588926/8d5e0b33eef91cf4.jpg)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://i2.muimg.com/588926/2b80267e202416bc.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Juhezi's blog</h1>
+            <h2 class="blog-description">I am a slow walker, but I never walk backwards.</h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-06-19T10:53:49.000Z" itemprop="datePublished">
+          2017-06-19
+      </time>
+    
+    
+    | 
+    <a href='/tags/Lisp/'>Lisp</a>,
+    
+    <a href='/tags/SICP/'>SICP</a>
+    
+    
+</span>
+    <h1 class="post-title">费马小定理检测素数</h1>
+    <section class="post-content">
+      <h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p><img src="http://wx3.sinaimg.cn/mw690/005TG3l2ly1fgqpwxwms7j30jp03kjrk.jpg" alt="FermatTheroy"></p>
+<p>代码实现如下：</p>
+<p><em>Clojure</em><br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">(<span class="name">ns</span> com.juhezi.sicp.FermatTheroy)</div><div class="line"></div><div class="line">(<span class="name">defn</span> square [x]</div><div class="line">  (<span class="name">*</span> x x))</div><div class="line"></div><div class="line"><span class="comment">;费马小定理检测素数</span></div><div class="line"></div><div class="line"><span class="comment">;计算一个数的幂对另一个数取模的结果</span></div><div class="line"><span class="comment">;采用连续求平方的方式，使相对于计算中指数，，步长增长的阶是对数的。</span></div><div class="line"><span class="comment">;even? 判断是不是偶数</span></div><div class="line">(<span class="name">defn</span> expmod [base exp m]</div><div class="line">  (<span class="name">cond</span> (<span class="name">=</span> exp <span class="number">0</span>) <span class="number">1</span></div><div class="line">        (<span class="name">even</span>? exp) (<span class="name">rem</span> (<span class="name">square</span> (<span class="name">expmod</span> base (<span class="name">/</span> exp <span class="number">2</span>) m)) m)</div><div class="line">        <span class="symbol">:else</span> (<span class="name">rem</span> (<span class="name">*</span> base (<span class="name">expmod</span> base (<span class="name">-</span> exp <span class="number">1</span>) m)) m)))</div><div class="line"></div><div class="line"><span class="comment">;费马检测</span></div><div class="line">(<span class="name">defn</span> fermat-test [n]</div><div class="line">  (<span class="name">defn</span> try-it [a]</div><div class="line">    (<span class="name">=</span> (<span class="name">expmod</span> a n n) a))</div><div class="line">  (<span class="name">try-it</span> (<span class="name">+</span> <span class="number">1</span> (<span class="name">rand-int</span> (<span class="name">-</span> n <span class="number">1</span>)))))</div><div class="line"></div><div class="line"><span class="comment">;如果每次检测都成功，那么则表示 n 是一个素数</span></div><div class="line">(<span class="name">defn</span> fast-prime? [n times]</div><div class="line">  (<span class="name">cond</span> ((<span class="name">=</span> times <span class="number">0</span>) true)</div><div class="line">        ((<span class="name">fermat-test</span> n) (<span class="name">fast-prime</span>? n (<span class="name">-</span> times <span class="number">1</span>)))</div><div class="line">        <span class="symbol">:else</span> false))</div></pre></td></tr></table></figure></p>
+<p><em>Kotlin</em><br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">fermatTest</span><span class="params">(n: <span class="type">Int</span>, a: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> = a.toLong() == Math.pow(a.toDouble(), n.toDouble()).toLong() % n</div></pre></td></tr></table></figure></p>
+<p>费马检测需要选取位于 1 和 n - 1 之间（包括这两者）的数 a，而后检查 a 的 n 次幂取模 n 的余数是否等于 a。如果不等于，那么 n 一定不是素数，否则，n 则有可能是素数的。</p>
+<p><strong>注意：</strong> 对于任意的x、y 和 m ，我们总可以通过分别计算 x 取模 m 和 y 取模 m，而后将它们乘起来之后取模 m，得到 x 乘 y 取模的余数。这种技术非常有用，因为它意味着我们的计算中不需要去处理比 m 大很多的数。</p>
+<p>即：<br>mod表示取模运算，设 x , y ,m 都是正整数，则(x * y) mod m =[(x mod m)(y mod m)] mod m。</p>
+<p>证明如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">设x=am+b，y=cm+d，则 xy = acm^<span class="number">2</span> + adm + cbm + bd，所以 （xy mod m) = bd，而 x mod m = b，y mod m = d，所以等式成立。</div></pre></td></tr></table></figure></p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Juhezi</h4>
+    <p>A coder who want to make this world better.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/06/19/FermatTheory/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/06/19/FermatTheory/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/06/19/FermatTheory/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/05/24/church/">
+        丘奇(Church)计数 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Juhezi's blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>

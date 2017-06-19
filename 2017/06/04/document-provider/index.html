@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <title>丘奇(Church)计数 | Juhezi&#39;s blog</title>
+  <title>存储访问框架 | Juhezi&#39;s blog</title>
   <meta name="description" content="I am a slow walker, but I never walk backwards." />
   <meta name="HandheldFriendly" content="True" />
   <meta name="MobileOptimized" content="320" />
@@ -39,22 +39,29 @@
 <main class="content" role="main">
   <article class="post">
     <span class="post-meta">
-      <time datetime="2017-05-24T09:56:11.000Z" itemprop="datePublished">
-          2017-05-24
+      <time datetime="2017-06-04T07:05:08.000Z" itemprop="datePublished">
+          2017-06-04
       </time>
     
     
     | 
-    <a href='/tags/SICP/'>SICP</a>
+    <a href='/tags/Android/'>Android</a>
     
     
 </span>
-    <h1 class="post-title">丘奇(Church)计数</h1>
+    <h1 class="post-title">存储访问框架</h1>
     <section class="post-content">
-      <p>丘奇计数其实就是一种计数方法，建立在 lambda 演算的基础之上。</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p><img src="http://i4.buimg.com/588926/f9a4bc857ae9ea85.png" alt="code"></p>
-<p><em>补一个加法操作</em><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">;((a f) x) 执行 <span class="type">A</span> 的执行过程</div><div class="line">;要返回一个 fn，所以是固定格式</div><div class="line">(defn add [a b]</div><div class="line">  (fn [f]</div><div class="line">    (fn [x] ((b f) ((a f) x)))))</div></pre></td></tr></table></figure></p>
-<p><strong>Church 计的数，其实指的是 f 应用于 x 的次数。</strong></p>
+      <p>Android 4.4(API 19) 引入了存储访问框架（SAF）。SAF 可以让用户能够在其所有首选文档存储提供程序中方便地浏览并打开文档、图像以及其他组件。用户可以通过易用的标准UI，以统一的方式在所有应用和浏览程序中浏览文件和访问最近使用的文件。</p>
+<p>另外，云服务或者其他本地服务可以通过实现对应的接口来与 SAF 集成。</p>
+<p>SAF 包括以下内容：</p>
+<ul>
+<li><p>文档提供程序：内容提供程序，允许存储服务（如 Google Drive）显示其管理的文件。文档提供程序作为 <code>Documentsprovider</code>类的子类实现。文档提供程序的架构基于传统文件层次结构，但其实际数据存储方式是由开发者决定。Android 平台内置若干文档提供程序，如 Downloads、Images 和 Videos。</p>
+</li>
+<li><p>客户端应用：一种自定义应用，它调用 <code>ACTION_OPEN_DOCUMENT</code> 和/或 <code>ACTION_CREATE_DOCUMENT</code> Intent 并接收文档提供者返回的文件</p>
+</li>
+<li><p>选取器：系统 UI，允许用户访问客户端应用搜索条件的文档选择器内的文档。</p>
+</li>
+</ul>
 
     </section>
     <footer class="post-footer">
@@ -64,15 +71,15 @@
 </section>
       <section class="share">
     <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/05/24/church/"
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/06/04/document-provider/"
        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
         <span class="hidden">Twitter</span>
     </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/05/24/church/"
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/06/04/document-provider/"
        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
         <span class="hidden">Facebook</span>
     </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/05/24/church/"
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/06/04/document-provider/"
        onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
         <span class="hidden">Google+</span>
     </a>
@@ -81,14 +88,10 @@
   </article>
   <nav class="pagination" role="pagination">
     
-    <a class="newer-posts" href="/2017/06/19/FermatTheory/">
-        ← 费马小定理检测素数
-    </a>
-    
     <span class="page-number">•</span>
     
-    <a class="older-posts" href="/2017/05/19/android-intent-service/">
-        IntentService 和 HandlerThread 的原理 →
+    <a class="older-posts" href="/2017/05/24/church/">
+        丘奇(Church)计数 →
     </a>
     
 </nav>
