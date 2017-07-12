@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>代码合并：Merge &amp; Rebase | Juhezi&#39;s blog</title>
+  <meta name="description" content="I am a slow walker, but I never walk backwards." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="http://i2.muimg.com/588926/2b80267e202416bc.png" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Juhezi's blog">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://i4.buimg.com/588926/8d5e0b33eef91cf4.jpg)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://i2.muimg.com/588926/2b80267e202416bc.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Juhezi's blog</h1>
+            <h2 class="blog-description">I am a slow walker, but I never walk backwards.</h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-07-12T08:09:32.000Z" itemprop="datePublished">
+          2017-07-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/Git/'>Git</a>
+    
+    
+</span>
+    <h1 class="post-title">代码合并：Merge & Rebase</h1>
+    <section class="post-content">
+      <blockquote>
+<p>首先你要明白，<code>git merge</code>和<code>git rebase</code>做的事是一样的，都是将一个分支的更改并入另一个分支，只不过方式有些不同。</p>
+</blockquote>
+<p>讲 Merge 和 Rebase 之前，我们构建一个使用场景。</p>
+<p>如图是我们现在的状态：</p>
+<p><img src="http://wx3.sinaimg.cn/mw690/005TG3l2ly1fhh6py34sij309r05n74a.jpg" alt="init"></p>
+<p>我们的目的是把<code>juhezi</code>分支的更改合并到<code>master</code>分支上。</p>
+<h2 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h2><p>将 juhezi 分支合并到 master 分支是使用下面的命令：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git checkout master</div><div class="line">git merge juhezi</div></pre></td></tr></table></figure>
+<p>或者，也可以压缩到一行里：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git merge juhezi master</div></pre></td></tr></table></figure>
+<p>解决掉冲突后并提交，我们会发现呈现这样的情况：</p>
+<p><img src="http://wx3.sinaimg.cn/mw1024/005TG3l2ly1fhh740ll85j30b806smx7.jpg" alt="merge"></p>
+<p>新的合并提交把两个分支的历史连在了一起。很明显，这样会污染分支历史。</p>
+<h2 id="Rebase"><a href="#Rebase" class="headerlink" title="Rebase"></a>Rebase</h2><p>你可以使用下面的方式将 juhezi 并入到 master</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git checkout master</div><div class="line">git rebase juhezi</div></pre></td></tr></table></figure>
+<p>经历了两次解决冲突并 add 之后，成功地把 master 和 juhezi 合并在了一起。</p>
+<p>而现在，它的结构是这样的：</p>
+<p><img src="http://wx3.sinaimg.cn/mw1024/005TG3l2ly1fhh7j6lzthj30ah06nt8p.jpg" alt="rebase"></p>
+<p>可以看到，整个 master 分支直接加到了 juhezi 分支之上，项目历史非常简洁。</p>
+<h2 id="Rebase-的高级用法"><a href="#Rebase-的高级用法" class="headerlink" title="Rebase 的高级用法"></a>Rebase 的高级用法</h2><p>之前在执行 rebase 操作的时候，我们进行了两次的冲突处理，之所以是两次，是因为 master 和 juhezi 有两次单独的提交。</p>
+<p>可以执行 <code>git rebase -i</code> 对提交历史进行控制。</p>
+<p>这时会打开一个文本编辑器，在这里就可以进行对提交历史进行控制了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">edit d7051b7 Add A</div><div class="line">fixup e443d65 Add B</div><div class="line">fixup 1f8c0e5 Add C</div><div class="line">pick 29578a3 Add D</div><div class="line"></div><div class="line"># Rebase f4f5bc6..29578a3 onto f4f5bc6 (4 commands)</div><div class="line">#</div><div class="line"># Commands:</div><div class="line"># p, pick = use commit</div><div class="line"># r, reword = use commit, but edit the commit message</div><div class="line"># e, edit = use commit, but stop for amending</div><div class="line"># s, squash = use commit, but meld into previous commit</div><div class="line"># f, fixup = like &quot;squash&quot;, but discard this commit&apos;s log message</div><div class="line"># x, exec = run command (the rest of the line) using shell</div><div class="line"># d, drop = remove commit</div><div class="line">#</div><div class="line"># These lines can be re-ordered; they are executed from top to bottom.</div><div class="line">#</div><div class="line"># If you remove a line here THAT COMMIT WILL BE LOST.</div><div class="line">#</div><div class="line"># However, if you remove everything, the rebase will be aborted.</div><div class="line">#</div><div class="line"># Note that empty commits are commented out</div></pre></td></tr></table></figure>
+<p>结果如图所示：</p>
+<p><img src="http://wx4.sinaimg.cn/mw1024/005TG3l2ly1fhh7zgkpkhj30a7044748.jpg" alt="rebase_pro"></p>
+<p>可以看到，add B 和 add C 都被合并到 add A 里面了。</p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Juhezi</h4>
+    <p>A coder who want to make this world better.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/07/12/git-merge-rebase/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/07/12/git-merge-rebase/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/07/12/git-merge-rebase/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/07/04/clojure-skill/">
+        Clojure 中有用的函数 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Juhezi's blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
