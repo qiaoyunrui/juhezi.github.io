@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Matrix （Clojure 实现） | Juhezi&#39;s blog</title>
+  <meta name="description" content="I am a slow walker, but I never walk backwards." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="http://i2.muimg.com/588926/2b80267e202416bc.png" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Juhezi's blog">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://wx1.sinaimg.cn/mw690/005TG3l2ly1fhh87jgt9ij33341qgnnz.jpg)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://i2.muimg.com/588926/2b80267e202416bc.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Juhezi's blog</h1>
+            <h2 class="blog-description">I am a slow walker, but I never walk backwards.</h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-07-20T15:50:09.000Z" itemprop="datePublished">
+          2017-07-20
+      </time>
+    
+    
+    | 
+    <a href='/tags/Clojure/'>Clojure</a>
+    
+    
+</span>
+    <h1 class="post-title">Matrix （Clojure 实现）</h1>
+    <section class="post-content">
+      <p><em>摘自《Clojure编程》</em></p>
+<p>使用 Clojure 实现一个简单的矩阵。</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">defprotocol</span></span> Matrix</div><div class="line">  <span class="string">"Protocol for working with 2d data structures."</span></div><div class="line">  (<span class="name">lookup</span> [matrix i j])</div><div class="line">  (<span class="name">update</span> [matrix i j value])</div><div class="line">  (<span class="name">rows</span> [matrix])</div><div class="line">  (<span class="name">cols</span> [matrix])</div><div class="line">  (<span class="name">dims</span> [matrix]))</div><div class="line"></div><div class="line">(<span class="name"><span class="builtin-name">extend-protocol</span></span> Matrix</div><div class="line">  clojure.lang.IPersistentVector</div><div class="line">  (<span class="name">lookup</span> [vov i j]</div><div class="line">    (<span class="name"><span class="builtin-name">get-in</span></span> vov [i j]))</div><div class="line">  (<span class="name">update</span> [vov i j value]</div><div class="line">    (<span class="name">assoc-in</span> vov [i j] value))</div><div class="line">  (<span class="name">row</span> [vov]</div><div class="line">    (<span class="name"><span class="builtin-name">seq</span></span> vov))</div><div class="line">  (<span class="name">cols</span> [vov]</div><div class="line">    (<span class="name"><span class="builtin-name">apply</span></span> map vector vov))</div><div class="line">  (<span class="name">dims</span> [vov]</div><div class="line">    [(<span class="name"><span class="builtin-name">count</span></span> vov) (<span class="name"><span class="builtin-name">count</span></span> (<span class="name"><span class="builtin-name">first</span></span> vov))]))</div><div class="line"></div><div class="line">(<span class="name"><span class="builtin-name">extend-protocol</span></span> Matrix</div><div class="line">  <span class="literal">nil</span></div><div class="line">  (<span class="name">lookup</span> [x i j])</div><div class="line">  (<span class="name">update</span> [x i j value])</div><div class="line">  (<span class="name">rows</span> [x] [])</div><div class="line">  (<span class="name">cols</span> [x] [])</div><div class="line">  (<span class="name">dims</span> [x] [<span class="number">0</span> <span class="number">0</span>]))</div><div class="line"></div><div class="line">(<span class="name"><span class="builtin-name">defn</span></span> vov</div><div class="line">  <span class="string">"Create a vector of h w-item vectors."</span></div><div class="line">  [h w]</div><div class="line">  (<span class="name"><span class="builtin-name">vec</span></span> (<span class="name"><span class="builtin-name">repeat</span></span> h (<span class="name"><span class="builtin-name">vec</span></span> (<span class="name"><span class="builtin-name">repeat</span></span> w <span class="literal">nil</span>)))))</div></pre></td></tr></table></figure>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Juhezi</h4>
+    <p>A coder who want to make this world better.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/07/20/matrix-clojure/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/07/20/matrix-clojure/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/07/20/matrix-clojure/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/07/19/tcp/">
+        TCP 传输控制协议 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Juhezi's blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
