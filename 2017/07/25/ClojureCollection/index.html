@@ -67,7 +67,41 @@
 <li><p>数据结构是<strong>不可改变的而且是持久的</strong></p>
 </li>
 </ol>
-<h2 id="Loading…"><a href="#Loading…" class="headerlink" title="Loading…."></a>Loading….</h2>
+<h3 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h3><p>seq 总是产生一个集合类的顺序视图——称为一个<strong>序列</strong>。</p>
+<p>conj 总是向给定的集合类添加新的值。</p>
+<p>显然，seq 和 conj 对于它们所操作的集合类型来说是多态的。</p>
+<p>对于 vector 来说，conj 把一个值附加到 vector 后面；对于列表来说，则是附加到前面；对于 map 来说，就把一个键值对附加到 map 里，如果键已经存在，就替换对应的值，否则，就向这个 map 添加一个新的键值对。</p>
+<p>seq 为 vector、set、列表提供了符合直觉的顺序视图，并把 map 也包括进来，map 的顺序视图是包含 map 里面所有键值对（以[key value]形式表示）的一个列表。</p>
+<p>into 是建立在 seq 和 conj 之上的，这意味着 into 能自动用于任何至此 seq 和 conj 的值。</p>
+<p>Clojure 集合中会实现如下几个主要抽象：</p>
+<ul>
+<li><p>Collection</p>
+</li>
+<li><p>Sequence</p>
+</li>
+<li><p>Associative</p>
+</li>
+<li><p>Indexed</p>
+</li>
+<li><p>Stack</p>
+</li>
+<li><p>Set</p>
+</li>
+<li><p>Sorted</p>
+</li>
+</ul>
+<h3 id="集合：Collection"><a href="#集合：Collection" class="headerlink" title="集合：Collection"></a>集合：Collection</h3><p>Clojure 所有的数据结构都实现了 Collection 抽象。如下是 Collection 的核心函数：</p>
+<ul>
+<li>conj</li>
+<li>seq</li>
+<li>count</li>
+<li>empty 获取一个和所提供集合类型一样的空集合</li>
+<li>= 用来判断两个或多个集合是否相等</li>
+</ul>
+<p><strong>conj 会保证对于所有的集合类型，它都会<font size="10" color="red">高效</font>地把元素添加进去。</strong></p>
+<p><strong>count 保证对于所有集合操作耗时都是<font size="10" color="orange">高效</font>的（序列除外，因为序列的长度可能是未知的）。</strong></p>
+<h3 id="序列：Sequence"><a href="#序列：Sequence" class="headerlink" title="序列：Sequence"></a>序列：Sequence</h3><p>waiting…</p>
+
     </section>
     <footer class="post-footer">
       <section class="author">
