@@ -93,14 +93,65 @@
 <h3 id="集合：Collection"><a href="#集合：Collection" class="headerlink" title="集合：Collection"></a>集合：Collection</h3><p>Clojure 所有的数据结构都实现了 Collection 抽象。如下是 Collection 的核心函数：</p>
 <ul>
 <li>conj</li>
-<li>seq</li>
+<li>seq 获取集合的顺序视图</li>
 <li>count</li>
 <li>empty 获取一个和所提供集合类型一样的空集合</li>
 <li>= 用来判断两个或多个集合是否相等</li>
 </ul>
 <p><strong>conj 会保证对于所有的集合类型，它都会<font size="10" color="red">高效</font>地把元素添加进去。</strong></p>
 <p><strong>count 保证对于所有集合操作耗时都是<font size="10" color="orange">高效</font>的（序列除外，因为序列的长度可能是未知的）。</strong></p>
-<h3 id="序列：Sequence"><a href="#序列：Sequence" class="headerlink" title="序列：Sequence"></a>序列：Sequence</h3><p>waiting…</p>
+<h3 id="序列：Sequence"><a href="#序列：Sequence" class="headerlink" title="序列：Sequence"></a>序列：Sequence</h3><p>Sequence 接口定义了一个获取并且遍历各种集合的一个<strong>顺序视图</strong>的一种方法。这个集合可以是另一个集合，也可以是某个函数的一个返回值。</p>
+<p>除了 Collection 接口提供的一些函数，Sequence 还提供了一些额外接口：</p>
+<ul>
+<li>seq 函数返回给传入参数的一个序列。</li>
+<li>first、rest 以及 next 提供了遍历序列的一个方法。</li>
+<li>lazy-seq 创建一个内容是一个表达式结果的惰性序列。</li>
+</ul>
+<p>可以用 seq 产生有效值的类型称为可序列的类型：</p>
+<ul>
+<li>所有的 Clojure 集合类型</li>
+<li>所有的 Java 集合类型（即 java.util.* ）</li>
+<li>所有的 Java map</li>
+<li>所有的 java.lang.CharSequence，包括 String</li>
+<li>实现了 java.lang.Iterable 的任意类型</li>
+<li>数组</li>
+<li>nil （或者是 Java 方法返回的 null）</li>
+<li>任何实现了 clojure.lang.Seqable 接口的类型</li>
+</ul>
+<p><strong>seq 对于任何 nil 或者任何类型的空集合都返回 nil。</strong></p>
+<p><strong>如果操作的结果是空的话，那么 rest 始终返回一个空序列，但是 next 则返回 nil。原因在于 next 始终会强制实例化尾巴的第一个元素。</strong></p>
+<p>序列不是列表，它们在很多方面上是不同的：</p>
+<ol>
+<li><p>要计算一个序列的长度是比较耗时的。</p>
+</li>
+<li><p>序列的内容可能是惰性的，而只有在真的要用到序列中值的时候才会去实例化。</p>
+</li>
+<li><p>一个生成序列的函数可能生成一个无限惰性序列，所以也就是不可数的。</p>
+</li>
+</ol>
+<p>而列表则是会保存它的长度，是所以要获取列表长度的方法是非常高效的。而获取序列长度的唯一办法是遍历这个序列。</p>
+<h4 id="创建序列"><a href="#创建序列" class="headerlink" title="创建序列"></a>创建序列</h4><p>一般来说，一个序列是从一个集合生成而来，要么是通过 seq 函数直接创建，要么通过其他函数（比如 map）间接调用 seq。</p>
+<p>但有两种方法可以直接创建一个序列：cons 和 list*。</p>
+<ul>
+<li><p>cons 接收两个参数，第一个参数是一个值作为新序列的头，第二个参数是一个集合，作为新序列的尾巴：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(<span class="name">cons</span> <span class="number">0</span> (<span class="name">range</span> <span class="number">1</span> <span class="number">5</span>))</div><div class="line"><span class="comment">;=&gt; (0 1 2 3 4)</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>list* 只是一个帮助函数，来简化多个值来创建序列的需求：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(<span class="name">list*</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> (<span class="name">range</span> <span class="number">4</span> <span class="number">10</span>))</div><div class="line"><span class="comment">;=&gt; (0 1 2 3 4 5 6 7 8 9)</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="惰性序列"><a href="#惰性序列" class="headerlink" title="惰性序列"></a>惰性序列</h4><p>在 Clojure 中，一个集合的具体内容可以是惰性生成的。访问一个惰性序列的过程称为实例化；当一个惰性序列中的元素都被计算的时候，这个序列就被完全实例化了。</p>
+<p>可以通过宏 lazy-seq 来创建一个惰性序列，这个宏接收任意返回值是一个可序列化的表达式。</p>
+<p>如果需要完全实例化一个惰性序列并且保持这个序列的所有元素，可以使用 doall ，如果并不需要惰性序列的具体内容，那么应该使用 dorun。</p>
+<p>一旦惰性序列的一个元素被实例化之后，只要保持了对这个序列的引用，那么这个元素就会一直保持着了。也就是，只要保持了对序列的一个引用，那么序列中的元素就不能被垃圾回收。</p>
+<h3 id="Associative"><a href="#Associative" class="headerlink" title="Associative"></a>Associative</h3><p>关系型数据结构 Associative 接口所抽象的是把一个 key 和一个 value 关联起来的数据结构。这个接口包含 4 个操作：</p>
+<ul>
+<li>assoc，向集合中添加一个新的 key 到 value 的映射</li>
+<li>dissoc，从集合中移除一个从指定 key 到 value 的映射</li>
+<li>get，从集合中找出指定 key 的 value</li>
+<li>contains?</li>
+</ul>
+<p>最正宗的关系型数据结构是 map。</p>
 
     </section>
     <footer class="post-footer">
