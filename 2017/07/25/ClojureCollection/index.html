@@ -152,6 +152,31 @@
 <li>contains?</li>
 </ul>
 <p>最正宗的关系型数据结构是 map。</p>
+<p>assoc 和 dissoc 可以一次性添加/去除多个键值对。</p>
+<p>除了 map 之外，get 和 assoc 也支持 vector 进行操作。</p>
+<p>get 还能操作操作 set，如果一个 key 在 set 中存在的话，那么会返回它，否则返回 nil。</p>
+<p>find 跟 get 更类似，只是它返回的不是 key 所对应的 value，而是返回一个键值对——如果 map 里面包含指定的 key 的话，或者返回 nil 如果不包含这个 key 的话。</p>
+<h3 id="索引集合：Indexed"><a href="#索引集合：Indexed" class="headerlink" title="索引集合：Indexed"></a>索引集合：Indexed</h3><p>Indexed 接口提供了操作下标的各种函数。这个接口里面只有一个函数： nth，它就跟 get 类似。不同之处在于，它们对于越界的下标的处理：nth 会抛出异常，而 get 则是返回 nil。</p>
+<p>nth 和 get 的意义是很不一样的。首先，nth 只能接收数字作为查询的 key（下标），它可以作用于很多有“下标”概念的值：vector、列表、序列、Java 数组、Java 列表、字符串、正则表达式的匹配数组等等，而 get 则更通用：它可以操作任何关系型的值，在处理 vector 的时候，它可以把下标当作 key。</p>
+<p>当传给 get 一个不支持的参数类型，它可以返回 nil 而不是抛出异常，nth 则直接抛出异常。</p>
+<h3 id="栈：Stack"><a href="#栈：Stack" class="headerlink" title="栈：Stack"></a>栈：Stack</h3><ul>
+<li>conj 把一个值添加到栈中</li>
+<li>pop 获取栈顶的值，并且移除这个值</li>
+<li>peek 获取栈顶的值，但是不移除这个值</li>
+</ul>
+<p>列表和 vector 都可以当作栈用，在这两种集合中，栈顶都是 conj 可以高效添加元素的另外一端。</p>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>set 接口需要 disj 来从 set 里面移除一个元素。</p>
+<h3 id="有序集合：Sorted"><a href="#有序集合：Sorted" class="headerlink" title="有序集合：Sorted"></a>有序集合：Sorted</h3><p>实现 sorted 抽象的集合保证集合内的值被以特定的顺序保存，这个顺序可以通过一个词或者一个特定的 comparator 接口来定义。这个接口包含以下函数：</p>
+<ul>
+<li><p>rseq 函数可以在<strong>常量时间</strong>内<em>反序</em>地返回一个集合的元素。</p>
+</li>
+<li><p>subseq 可返回一个集合的某一个区间内的元素的序列。</p>
+</li>
+<li><p>rsubseq 和 subseq 类似，但是返回的元素是反序的。</p>
+</li>
+</ul>
+<p>只有 map 和 set 实现了 sorted 接口。没有字面量来表示 sorted 的集合，要创建 sorted 集合可以用 sorted-map 和 sorted-set 来创建有序的 map 和 set。如果要提供自己的谓词或者比较器来定义排序规则的话，可以使用 sorted-map-by 和 sorted-set-by。</p>
+<p>compare 函数定义默认排序：正序。它支持所有的 Clojure 标量及顺序集合，它会按照字典排序法来在每一层对元素进行排序。<br>compare 不止支持字符串、数字以及顺序集合：它支持任何实现了 java.lang.Comparable 接口的值。</p>
 
     </section>
     <footer class="post-footer">
