@@ -67,7 +67,7 @@
 <li><p>数据结构是<strong>不可改变的而且是持久的</strong></p>
 </li>
 </ol>
-<h3 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h3><p>seq 总是产生一个集合类的顺序视图——称为一个<strong>序列</strong>。</p>
+<h2 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h2><h3 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h3><p>seq 总是产生一个集合类的顺序视图——称为一个<strong>序列</strong>。</p>
 <p>conj 总是向给定的集合类添加新的值。</p>
 <p>显然，seq 和 conj 对于它们所操作的集合类型来说是多态的。</p>
 <p>对于 vector 来说，conj 把一个值附加到 vector 后面；对于列表来说，则是附加到前面；对于 map 来说，就把一个键值对附加到 map 里，如果键已经存在，就替换对应的值，否则，就向这个 map 添加一个新的键值对。</p>
@@ -177,6 +177,19 @@
 </ul>
 <p>只有 map 和 set 实现了 sorted 接口。没有字面量来表示 sorted 的集合，要创建 sorted 集合可以用 sorted-map 和 sorted-set 来创建有序的 map 和 set。如果要提供自己的谓词或者比较器来定义排序规则的话，可以使用 sorted-map-by 和 sorted-set-by。</p>
 <p>compare 函数定义默认排序：正序。它支持所有的 Clojure 标量及顺序集合，它会按照字典排序法来在每一层对元素进行排序。<br>compare 不止支持字符串、数字以及顺序集合：它支持任何实现了 java.lang.Comparable 接口的值。</p>
+<p><strong>集合本身也是函数。集合的 key （通常）也是函数。</strong></p>
+<p>some 函数在一个序列里搜索<em>第一个</em>能够符合指定谓词的元素。</p>
+<p>filter 返回一个惰性序列，惰性序列的内容就是那些满足指定谓词的元素。</p>
+<p>remove 和 filter 的作用正正好相反，它把符合谓词的元素从集合中去掉，返回所有不符合谓词要求的元素。</p>
+<h2 id="数据结构的类型"><a href="#数据结构的类型" class="headerlink" title="数据结构的类型"></a>数据结构的类型</h2><h3 id="列表：-List"><a href="#列表：-List" class="headerlink" title="列表： List"></a>列表： List</h3><p>Clojure 中的列表是<font size="7" color="skyblue">单向链表</font>。</p>
+<p>列表不支持 get 操作，因为列表上无法达到 get 亚线性的性能要求。</p>
+<p>可以使用 list? 来测试一个集合是不是列表。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">'(<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>)</div><div class="line">=&gt; (<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>)</div></pre></td></tr></table></figure>
+<h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3><p>vector 是一种<font size="7" color="skyblue">顺序数据结构</font>。</p>
+<p>vector? 可以测试一个值是不是 vector。</p>
+<h3 id="set-1"><a href="#set-1" class="headerlink" title="set"></a>set</h3><p>不包含重复元素。</p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>keys 和 vals 乐意很方便地返回一个 map 的所有的键和值。</p>
+<p>group-by 函数可以很方便地根据一个 key 函数把一个集合分成多组。</p>
 
     </section>
     <footer class="post-footer">
