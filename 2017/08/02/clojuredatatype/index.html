@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>数据类型和协议 | Juhezi&#39;s blog</title>
+  <meta name="description" content="I am a slow walker, but I never walk backwards." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="http://i2.muimg.com/588926/2b80267e202416bc.png" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Juhezi's blog">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://wx1.sinaimg.cn/mw690/005TG3l2ly1fhh87jgt9ij33341qgnnz.jpg)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://i2.muimg.com/588926/2b80267e202416bc.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Juhezi's blog</h1>
+            <h2 class="blog-description">I am a slow walker, but I never walk backwards.</h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-08-02T15:17:33.000Z" itemprop="datePublished">
+          2017-08-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/Clojure/'>Clojure</a>,
+    
+    <a href='/tags/Note/'>Note</a>
+    
+    
+</span>
+    <h1 class="post-title">数据类型和协议</h1>
+    <section class="post-content">
+      <p>让一个新的类型来实现已有的接口；让一个已有的类型实现一个新的接口，而不用重新编译现有代码。</p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>Clojure 里面接口的对应物称之为协议（Protocol）。</p>
+<p>一个协议由一个或者多个方法组成，而且每个方法可以有多个方法体。所有的方法至少有一个参数，这个参数对应对应到 Java 里面的 this。</p>
+<p>协议里没每个方法的第一个参数是特殊的，因为到底使用这个协议的哪个实现体就是根据第一个参数来决定的。即根据第一个参数的类型来决定的。</p>
+<p>协议的定义如下所示：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(<span class="name">defprotocol</span> Test</div><div class="line">  (<span class="name">say-hello</span> [this arg1 arg2]))</div></pre></td></tr></table></figure>
+<p>协议的命名方式是驼峰命名风格的，因为它们最终会被编译成 JVM 的接口和类。</p>
+<h2 id="扩展已有的类型"><a href="#扩展已有的类型" class="headerlink" title="扩展已有的类型"></a>扩展已有的类型</h2><p>通过 extend-protocol 可以对已有的类型进行扩展</p>
+<p>extend-protocol 是一个宏，这个宏的第一个参数是协议的名字，紧接着是一些符号（比如指定类型名字）以及列表（前面指定的类型对于协议的方法的实现）。</p>
+<p>extend-protocol 不是对一个协议进行扩展的唯一办法，扩展的方法还有：</p>
+<ul>
+<li><p>内联实现</p>
+</li>
+<li><p>extend</p>
+</li>
+<li><p>extend-type</p>
+</li>
+</ul>
+<p>extend-type 跟 extend-protocol 是相对的：extend-protocol 把一个协议扩展到多个类型，而 extend-type 则可以把多个协议扩展到一个类型。编写它们的代码结构是类似的，只是指定协议与指定类型的地方相互调换一下就可以了。</p>
+<p>还可以把一个协议扩展到 nil。</p>
+<h2 id="定义类型"><a href="#定义类型" class="headerlink" title="定义类型"></a>定义类型</h2><p>一个 Clojure 类型是一个 Java 类，不过定义 Clojure 的类型要简单很多：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(<span class="name">defrecord</span> Point [x y])</div><div class="line"><span class="comment">;or</span></div><div class="line">(<span class="name">deftype</span> Point [x y])</div></pre></td></tr></table></figure></p>
+<p>这两种定义方法都会定义出一个新的 Point Java 类，Java 类里面有两个以 public 和 final 修饰的名为 x 和 y 字段。跟协议一样，类型的名字是采用驼峰风格的。要创建一个新的 Point 实例，直接调用它的构造函数 (Point. 3 4) 就可以了。</p>
+<p>定义的每一个字段都是 Java 中的 Object 类型。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">;为字段指定类型</span></div><div class="line">(<span class="name">defrecord</span> Testx [^String name ^int age])</div></pre></td></tr></table></figure>
+<h3 id="deftype-与-defrecord-的区别"><a href="#deftype-与-defrecord-的区别" class="headerlink" title="deftype 与 defrecord 的区别"></a>deftype 与 defrecord 的区别</h3><p>defrecord 对于所定义的类型提供了与 Clojure 以及 Java 进行互操作的一些默认行为，而 deftype 则提供了一些对于底层操作进行优化的能力。</p>
+<h3 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h3><p>通常被称为记录类型，由 defrecord 定义的类型其实就是由 deftype 定义的类型的一种特例。添加了如下这些额外的特性：</p>
+<ul>
+<li>值语义</li>
+<li>实现了关系型数据结构的接口</li>
+<li>元数据的支持</li>
+<li>对于 Clojure reader 的支持，比如可以直接通过 Clojure reader 直接读入一个记录类型</li>
+<li>一个额外的方便的构造函数，使得我们可以在创建实例的时候添加一些元数据以及一些额外的字段</li>
+</ul>
+<p><strong>值语义。</strong> 值语义意味着两件事情：记录类型是不可变的；如果两个类型的所有对应字段都相等，那么这两个记录本身也是相等的；</p>
+<p><strong>记录是一种关系型数据结构。</strong> 记录类型实现了关系型数据结构的接口，所以那些对 map 操作的函数都可以用在记录类型的实例上。</p>
+<p>从记录类型实例去掉一个预定义的字段的话，返回的就不是记录类型了，而是被降级成一个普通的 map。但是如果去除一个运行时额外添加的字段，那么返回的仍然是记录类型，而不会发生降级。</p>
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><p>deftype 是 Clojure 里面最底层的定义形式。</p>
+<h2 id="实现协议"><a href="#实现协议" class="headerlink" title="实现协议"></a>实现协议</h2>
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Juhezi</h4>
+    <p>A coder who want to make this world better.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/08/02/clojuredatatype/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/08/02/clojuredatatype/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/08/02/clojuredatatype/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/07/25/ClojureCollection/">
+        Clojure 中的集合与数据结构 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Juhezi's blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>

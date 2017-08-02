@@ -40,6 +40,41 @@
   <article class="post">
     <header class="post-header">
       <span class="post-meta">
+      <time datetime="2017-08-02T15:17:33.000Z" itemprop="datePublished">
+          2017-08-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/Clojure/'>Clojure</a>,
+    
+    <a href='/tags/Note/'>Note</a>
+    
+    
+</span>
+      <h2 class="post-title"><a href="/2017/08/02/clojuredatatype/">数据类型和协议</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      
+        让一个新的类型来实现已有的接口；让一个已有的类型实现一个新的接口，而不用重新编译现有代码。
+协议Clojure 里面接口的对应物称之为协议（Protocol）。
+一个协议由一个或者多个方法组成，而且每个方法可以有多个方法体。所有的方法至少有一个参数，这个参数对应对应到 Java 里面的 this。
+协议里没每个方法的第一个参数是特殊的，因为到底使用这个协议的哪个实现体就是根据第一个参数来决定的。即根据第一个参数的类型来决定的。
+协议的定
+      
+      </p>
+      
+      <p>
+          <a href="/2017/08/02/clojuredatatype/" class="excerpt-link">Read More...</a>
+      </p>
+      
+    </section>
+  </article>
+  
+  <article class="post">
+    <header class="post-header">
+      <span class="post-meta">
       <time datetime="2017-07-24T16:07:54.000Z" itemprop="datePublished">
           2017-07-25
       </time>
@@ -342,37 +377,6 @@ Church 计的数，其实指的是 f 应用于 x 的次数。
       
       <p>
           <a href="/2017/05/18/kotlin-dsl-builder/" class="excerpt-link">Read More...</a>
-      </p>
-      
-    </section>
-  </article>
-  
-  <article class="post">
-    <header class="post-header">
-      <span class="post-meta">
-      <time datetime="2017-05-16T07:37:25.000Z" itemprop="datePublished">
-          2017-05-16
-      </time>
-    
-    
-    | 
-    <a href='/tags/Android/'>Android</a>
-    
-    
-</span>
-      <h2 class="post-title"><a href="/2017/05/16/android-touch-event-dispatch/">Android 事件分发机制</a></h2>
-    </header>
-    <section class="post-excerpt">
-      <p>
-      
-        点击事件的传递规则public boolean dispatchTouchEvent(MotionEvent event)
-  用来进行事件的分发。如果事件能够传递给当前 View，那么此方法一定会被调用，返回结果受当前 View 的 onTouchEvent() 和 下级 View 的 dispatchTouchEvent()方法的影响，表示是否消耗当前事件。
-public boolean onInterceptTouchEvent(
-      
-      </p>
-      
-      <p>
-          <a href="/2017/05/16/android-touch-event-dispatch/" class="excerpt-link">Read More...</a>
       </p>
       
     </section>
