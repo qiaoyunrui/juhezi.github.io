@@ -40,6 +40,40 @@
   <article class="post">
     <header class="post-header">
       <span class="post-meta">
+      <time datetime="2017-08-06T13:33:02.000Z" itemprop="datePublished">
+          2017-08-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/Note/'>Note</a>,
+    
+    <a href='/tags/NetWork/'>NetWork</a>
+    
+    
+</span>
+      <h2 class="post-title"><a href="/2017/08/06/tcp-data-stream/">TCP的交互数据流</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      
+        约有一半的TCP报文段包含成块数据（如FTP、电子邮件），另一半则包含交互数据（如Telnet）。
+TCP需要同时处理这两类数据，但使用的处理算法则有所不同。
+通常TCP在接收到数据时并不立即发送ACK，相反，它推迟发送，以便将ACK与需要沿该方向发送的数据一起发送（有时称这种现象为数据捎带ACK）。绝大多数实现采用的时延为200ms，也就是说，TCP将以最大200ms的时延等待是否有数据一起发送。
+Nagle 算法该算法要求一个TCP
+      
+      </p>
+      
+      <p>
+          <a href="/2017/08/06/tcp-data-stream/" class="excerpt-link">Read More...</a>
+      </p>
+      
+    </section>
+  </article>
+  
+  <article class="post">
+    <header class="post-header">
+      <span class="post-meta">
       <time datetime="2017-08-06T09:27:16.000Z" itemprop="datePublished">
           2017-08-06
       </time>
@@ -356,36 +390,6 @@ Church 计的数，其实指的是 f 应用于 x 的次数。
       
       <p>
           <a href="/2017/05/24/church/" class="excerpt-link">Read More...</a>
-      </p>
-      
-    </section>
-  </article>
-  
-  <article class="post">
-    <header class="post-header">
-      <span class="post-meta">
-      <time datetime="2017-05-19T01:57:47.000Z" itemprop="datePublished">
-          2017-05-19
-      </time>
-    
-    
-    | 
-    <a href='/tags/Android/'>Android</a>
-    
-    
-</span>
-      <h2 class="post-title"><a href="/2017/05/19/android-intent-service/">IntentService 和 HandlerThread 的原理</a></h2>
-    </header>
-    <section class="post-excerpt">
-      <p>
-      
-        相信大家在 Android 开发中也用到过 IntentService 和 HandlerThread 这两个类，那么我们今天就来分析一下这两个类。
-什么是 IntentService?IntentService 是 Service 的一个子类，它的内部有一个 Handler 和 HandlerThread。所以 IntentService 与 Service 最大的不同就是 IntentService 在后台开启了一个子线程，而 Se
-      
-      </p>
-      
-      <p>
-          <a href="/2017/05/19/android-intent-service/" class="excerpt-link">Read More...</a>
       </p>
       
     </section>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>TCP的交互数据流 | Juhezi&#39;s blog</title>
+  <meta name="description" content="I am a slow walker, but I never walk backwards." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="http://i2.muimg.com/588926/2b80267e202416bc.png" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Juhezi's blog">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://wx1.sinaimg.cn/mw690/005TG3l2ly1fhh87jgt9ij33341qgnnz.jpg)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://i2.muimg.com/588926/2b80267e202416bc.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Juhezi's blog</h1>
+            <h2 class="blog-description">I am a slow walker, but I never walk backwards.</h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-08-06T13:33:02.000Z" itemprop="datePublished">
+          2017-08-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/Note/'>Note</a>,
+    
+    <a href='/tags/NetWork/'>NetWork</a>
+    
+    
+</span>
+    <h1 class="post-title">TCP的交互数据流</h1>
+    <section class="post-content">
+      <p>约有一半的TCP报文段包含成块数据（如FTP、电子邮件），另一半则包含交互数据（如Telnet）。</p>
+<p>TCP需要同时处理这两类数据，但使用的处理算法则有所不同。</p>
+<p>通常TCP在接收到数据时并不立即发送ACK，相反，它推迟发送，以便将ACK与需要沿该方向发送的数据一起发送（有时称这种现象为数据捎带ACK）。绝大多数实现采用的时延为200ms，也就是说，TCP将以最大200ms的时延等待是否有数据一起发送。</p>
+<h2 id="Nagle-算法"><a href="#Nagle-算法" class="headerlink" title="Nagle 算法"></a>Nagle 算法</h2><p>该算法要求一个TCP连接上最多只能有一个未被确认的未完成的小分组，在该分组的确认到达之前不能发送其他的小分组。相反TCP收集这些少量的分组，并在确认到来之时以一个分组的方式发出去。该算法的优越之处在于它是自适应的：确认到达越快，数据也就发送得越快。而在希望减少微小分组数目的低速广域网上，则会发送更少的分组。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>交互数据总是以小于最大报文长度的分组发送。对于这些小的报文段，接收方使用经受延时的确认方法来判断是否可以被推迟发送，以便与回送数据一起发送。这样通常会减少报文段的数据。</p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Juhezi</h4>
+    <p>A coder who want to make this world better.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/08/06/tcp-data-stream/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/08/06/tcp-data-stream/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/08/06/tcp-data-stream/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/08/06/tcp-connect/">
+        TCP连接的建立与终止 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Juhezi's blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
