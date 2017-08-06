@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>TCP连接的建立与终止 | Juhezi&#39;s blog</title>
+  <meta name="description" content="I am a slow walker, but I never walk backwards." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="http://i2.muimg.com/588926/2b80267e202416bc.png" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Juhezi's blog">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://wx1.sinaimg.cn/mw690/005TG3l2ly1fhh87jgt9ij33341qgnnz.jpg)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://i2.muimg.com/588926/2b80267e202416bc.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Juhezi's blog</h1>
+            <h2 class="blog-description">I am a slow walker, but I never walk backwards.</h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-08-06T09:27:16.000Z" itemprop="datePublished">
+          2017-08-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/Note/'>Note</a>,
+    
+    <a href='/tags/NetWork/'>NetWork</a>
+    
+    
+</span>
+    <h1 class="post-title">TCP连接的建立与终止</h1>
+    <section class="post-content">
+      <p>TCP 是一个面向连接的协议。</p>
+<h2 id="建立连接协议"><a href="#建立连接协议" class="headerlink" title="建立连接协议"></a>建立连接协议</h2><p><strong>三次握手</strong></p>
+<ol>
+<li><p>客户端发送一个SYN指定客户端打算连接的服务器端口，以及初始序号（ISN）。</p>
+</li>
+<li><p>服务器发回包含服务器的初始序号的SYN报文段作为应答。同时，将确认序号（ack）设置为客户的ISN<strong>加1</strong>以对客户的SYN报文段加以确认。</p>
+</li>
+<li><p>客户端必须将确认序号（ack）设置为服务器的ISN加1以对服务器的SYN报文段进行确认。</p>
+</li>
+</ol>
+<p>ISN可看作是一个32比特的计数器，每4ms加1。这样选择序号的目的在于防止网络中被延迟的分组在以后又被传送，而导致某个连接一方对它作错误的解释。</p>
+<h2 id="断开连接"><a href="#断开连接" class="headerlink" title="断开连接"></a>断开连接</h2><p>终止一个连接需要经过4次挥手，这由于 TCP 的半关闭造成的。既然一个TCP连接是全双工（即数据在两个方向上能同时传递），因此每个方向必须单独地进行关闭。这原则就是当一方完成它的数据发送任务后就能发送一个FIN来终止这个方向的连接。当一端收到一个FIN，它必须通知应用层另一端已经终止了那个方向的数据发送。发送FIN是应用层进行关闭的结果。</p>
+<p>收到一个FIN只意味着这一方向上没有数据流动。一个TCP连接在收到一个FIN后仍能发送数据。</p>
+<p><strong>四次挥手</strong></p>
+<ol>
+<li><p>客户端向服务端发送一个 FIN，用来关闭从客户到服务端的数据传送。</p>
+</li>
+<li><p>当服务器收到这个FIN，它发回一个ACK，确认序号为收到的序号加1。</p>
+</li>
+<li><p>接着这个服务器发送一个FIN。</p>
+</li>
+<li><p>客户端发回一个确认（ACK），并将确认序号设置为收到序号加1。</p>
+</li>
+</ol>
+<h2 id="最大报文段长度"><a href="#最大报文段长度" class="headerlink" title="最大报文段长度"></a>最大报文段长度</h2><p>最大报文段长度（MSS）表示TCP传往另一端的最大数据块长度。当一个连接建立时，连接的双方都要通告各自的MSS。最终的IP数据报通常是40字节长：20字节的TCP首部和20字节的IP首部。</p>
+<p>MSS让主机限制另一端发送数据报的长度。加上主机也能控制它发送数据报的长度，这将使以较小MT连接到另一个网路上的主机避免分段。</p>
+<h2 id="2MSL等待状态"><a href="#2MSL等待状态" class="headerlink" title="2MSL等待状态"></a>2MSL等待状态</h2><p>TIME_WAIT 状态也称为2MSL等待状态。每个具体TCP实现必须选择一个报文段最大生存时间MSL（Maximum Segment Lifetime）。它是任何报文段被丢弃前在网络内的最长时间。</p>
+<p>当TCP执行一个主动关闭，并发回最后一个ACK，该连接必须在TIME_WAIT状态停留的时间为2倍的MSL。这样可让TCP再次发送最后的ACK已防止这个ACK丢失。</p>
+<p>这种2MSL等待的另一个结果是这个TCP连接在2MSL等待期间，定义这个连接的插口（客户的IP地址和端口号，服务端的IP地址和端口号）不能再被使用。这个连接只能在2MSL结束后才能再被使用。</p>
+<h2 id="复位报文段"><a href="#复位报文段" class="headerlink" title="复位报文段"></a>复位报文段</h2><p>TCP首部中的RST比特是用于“复位”的。一般来说，无论何时一个报文段发往基准的连接出现错误，TCP都会发出一个复位报文段（所谓“基准的连接”是指由目的IP地址和目的端口号以及源IP地址和源端口号指明的连接）。</p>
+<h3 id="到不存在的端口的连接请求"><a href="#到不存在的端口的连接请求" class="headerlink" title="到不存在的端口的连接请求"></a>到不存在的端口的连接请求</h3><p>当连接请求到达时，目的端口没有进程正在听。对于UDP，将产生一个ICMP端口不可达的信息。而TCP则使用复位。</p>
+<h3 id="异常终止一个连接"><a href="#异常终止一个连接" class="headerlink" title="异常终止一个连接"></a>异常终止一个连接</h3><p>异常终止一个连接对应用程序来说有两个优点：</p>
+<ol>
+<li><p>丢弃任何待发数据并立即发送复位报文段</p>
+</li>
+<li><p>RST的接收方会区分另一端执行的是异常关闭还是正常关闭。</p>
+</li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>TCP同时打开时，仅建立一条连接而不是两条连接。</p>
+<p>一个同时打开的连接需要交换4个报文段，比正常的三次握手多一个。</p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Juhezi</h4>
+    <p>A coder who want to make this world better.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/08/06/tcp-connect/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/08/06/tcp-connect/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/08/06/tcp-connect/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/08/02/clojuredatatype/">
+        数据类型和协议 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Juhezi's blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
