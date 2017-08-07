@@ -40,6 +40,40 @@
   <article class="post">
     <header class="post-header">
       <span class="post-meta">
+      <time datetime="2017-08-07T15:05:15.000Z" itemprop="datePublished">
+          2017-08-07
+      </time>
+    
+    
+    | 
+    <a href='/tags/Note/'>Note</a>,
+    
+    <a href='/tags/NetWork/'>NetWork</a>
+    
+    
+</span>
+      <h2 class="post-title"><a href="/2017/08/07/tcp-block-stream/">TCP的成块数据流</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      
+        滑动窗口协议滑动窗口协议，也称为回退N步协议（Go-Back-N，GBN）中，允许发送方发送多个分组（当有多个分组可用时）而不需等待确认，但它受限于在流水线 中为未确认的分组数不能超过某个最大允许数N。滑动窗口协议是TCP使用的一种流量控制方法，此协议能够加速数据的传输。
+只有在接收窗口向前滑动时（与此同时也发送了确认），发送窗口才有可能向前滑动。
+收发两端的窗口按照以上规律不断地向前滑动，因此这种协议又称为滑动窗口协议。
+当发送窗口和
+      
+      </p>
+      
+      <p>
+          <a href="/2017/08/07/tcp-block-stream/" class="excerpt-link">Read More...</a>
+      </p>
+      
+    </section>
+  </article>
+  
+  <article class="post">
+    <header class="post-header">
+      <span class="post-meta">
       <time datetime="2017-08-06T13:33:02.000Z" itemprop="datePublished">
           2017-08-06
       </time>
@@ -357,39 +391,6 @@ Clojure1234567891011121314151617181920212223242526(ns com.juhezi.sicp.FermatTher
       
       <p>
           <a href="/2017/06/19/FermatTheory/" class="excerpt-link">Read More...</a>
-      </p>
-      
-    </section>
-  </article>
-  
-  <article class="post">
-    <header class="post-header">
-      <span class="post-meta">
-      <time datetime="2017-05-24T09:56:11.000Z" itemprop="datePublished">
-          2017-05-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/SICP/'>SICP</a>
-    
-    
-</span>
-      <h2 class="post-title"><a href="/2017/05/24/church/">丘奇(Church)计数</a></h2>
-    </header>
-    <section class="post-excerpt">
-      <p>
-      
-        丘奇计数其实就是一种计数方法，建立在 lambda 演算的基础之上。
-Code
-补一个加法操作12345;((a f) x) 执行 A 的执行过程;要返回一个 fn，所以是固定格式(defn add [a b]  (fn [f]    (fn [x] ((b f) ((a f) x)))))
-Church 计的数，其实指的是 f 应用于 x 的次数。
-
-      
-      </p>
-      
-      <p>
-          <a href="/2017/05/24/church/" class="excerpt-link">Read More...</a>
       </p>
       
     </section>
