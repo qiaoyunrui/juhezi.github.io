@@ -40,6 +40,43 @@
   <article class="post">
     <header class="post-header">
       <span class="post-meta">
+      <time datetime="2017-08-08T13:25:53.000Z" itemprop="datePublished">
+          2017-08-08
+      </time>
+    
+    
+    | 
+    <a href='/tags/Note/'>Note</a>,
+    
+    <a href='/tags/NetWork/'>NetWork</a>
+    
+    
+</span>
+      <h2 class="post-title"><a href="/2017/08/08/tcp-re-send/">TCP的超时与重传</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      
+        TCP提供可靠的传输层。它使用的方法之一就是确认从另一端收到的数据。但数据和确认都有可能会丢失。TCP通过在发送时设置一个定时器来解决这种问题。如果定时器溢出时还没有收到确认，它就重传该数据。对任何实现而言，，关键之处就在于超时和重传的策略，即怎样决定超时间隔和如何确定重传的频率。
+对每个连接，TCP管理4个不同的定时器：
+
+重传定时器使用于当希望收到另一端的确认。
+
+坚持定时器使窗口大小信息保持不断流动，即使另一端关闭了其接收端口。
+
+      
+      </p>
+      
+      <p>
+          <a href="/2017/08/08/tcp-re-send/" class="excerpt-link">Read More...</a>
+      </p>
+      
+    </section>
+  </article>
+  
+  <article class="post">
+    <header class="post-header">
+      <span class="post-meta">
       <time datetime="2017-08-07T16:01:45.000Z" itemprop="datePublished">
           2017-08-08
       </time>
@@ -351,42 +388,6 @@ Merge将 juhezi 分支合并到 master 分支是使用下面的命令：
       
       <p>
           <a href="/2017/07/12/git-merge-rebase/" class="excerpt-link">Read More...</a>
-      </p>
-      
-    </section>
-  </article>
-  
-  <article class="post">
-    <header class="post-header">
-      <span class="post-meta">
-      <time datetime="2017-07-03T16:21:41.000Z" itemprop="datePublished">
-          2017-07-04
-      </time>
-    
-    
-    | 
-    <a href='/tags/Clojure/'>Clojure</a>
-    
-    
-</span>
-      <h2 class="post-title"><a href="/2017/07/04/clojure-skill/">Clojure 中有用的函数</a></h2>
-    </header>
-    <section class="post-excerpt">
-      <p>
-      
-        收集一些在 Clojure 中很有的函数
-gensym
- gensym 函数返回一个保证唯一的符号。
- Sample:
- 12(gensym)=&gt; G__1029
-
-
-
-      
-      </p>
-      
-      <p>
-          <a href="/2017/07/04/clojure-skill/" class="excerpt-link">Read More...</a>
       </p>
       
     </section>
