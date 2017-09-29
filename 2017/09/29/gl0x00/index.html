@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>gl0x00 | Juhezi&#39;s blog</title>
+  <meta name="description" content="I am a slow walker, but I never walk backwards." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="http://i2.muimg.com/588926/2b80267e202416bc.png" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Juhezi's blog">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://wx1.sinaimg.cn/mw690/005TG3l2ly1fhh87jgt9ij33341qgnnz.jpg)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://i2.muimg.com/588926/2b80267e202416bc.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Juhezi's blog</h1>
+            <h2 class="blog-description">I am a slow walker, but I never walk backwards.</h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-09-29T08:33:39.000Z" itemprop="datePublished">
+          2017-09-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/Note/'>Note</a>,
+    
+    <a href='/tags/openGL/'>openGL</a>
+    
+    
+</span>
+    <h1 class="post-title">gl0x00</h1>
+    <section class="post-content">
+      <p>openGL 要求：指定顶点的命令必须包含在 glBegin函数之中，glEnd 函数之前（否则指定的顶点将被忽略）。并由 glBegin 来指明如何使用这些点。</p>
+<h3 id="绘制一个圆形"><a href="#绘制一个圆形" class="headerlink" title="绘制一个圆形"></a>绘制一个圆形</h3><p>这里使用的是绘制多边形的方法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> n = <span class="number">100</span>;</div><div class="line"><span class="keyword">const</span> GLfloat R = <span class="number">0.5f</span>;</div><div class="line"><span class="keyword">const</span> GLfloat Pi = <span class="number">3.1415926536f</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawCircle</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    glClear(GL_COLOR_BUFFER_BIT);</div><div class="line">    glBegin(GL_POLYGON);</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>;i &lt; n;i++) &#123;</div><div class="line">        glVertex2f(R * <span class="built_in">cos</span>(<span class="number">2</span> * Pi / n * i),R * <span class="built_in">sin</span>(<span class="number">2</span> * Pi / n * i));</div><div class="line">    &#125;</div><div class="line">    glEnd();</div><div class="line">    glFlush();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="关于点"><a href="#关于点" class="headerlink" title="关于点"></a>关于点</h3><p>点的大小默认为 1 个像素，可以使用 glPointSize 改变大小。</p>
+<p>函数原型为：</p>
+<p><code>void glPointSize(GLfloat size);</code> size必须大于 0.0f ，默认值为 1.0f ，单位为“像素”。</p>
+<h3 id="关于直线"><a href="#关于直线" class="headerlink" title="关于直线"></a>关于直线</h3><ol>
+<li><p>指定直线宽度</p>
+<p><code>void glLineWidth(GLfloat width);</code></p>
+</li>
+<li><p>绘制虚线</p>
+<p><code>glEnable(GL_LINE_STIPPLE);</code> 启动虚线模式<br><code>glDisable(GL_LINE_STIPPLE);</code> 关闭虚线模式<br><code>glLineStipple(GLint factor,GLushort pattern);</code> 设置虚线的样式。pattern是由1和0组成的长度为16的序列，从最低位开始看，如果为1，则直线上接下来应该画的factor个点将被画为实的；如果为0，则直线上接下来应该画的factor个点将被画为虚的。</p>
+<p><em>绘制一条虚线</em></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawSomething</span><span class="params">()</span> </span>&#123;</div><div class="line">    glClear(GL_COLOR_BUFFER_BIT);</div><div class="line">    glEnable(GL_LINE_STIPPLE);</div><div class="line">    glLineStipple(<span class="number">2</span>, <span class="number">0x0F0F</span>);</div><div class="line">    glLineWidth(<span class="number">10.0f</span>);</div><div class="line">    glBegin(GL_LINES);</div><div class="line">    glVertex2f(<span class="number">0.0f</span>, <span class="number">0.0f</span>);</div><div class="line">    glVertex2f(<span class="number">0.5f</span>, <span class="number">0.5f</span>);</div><div class="line">    glEnd();</div><div class="line">    glFlush();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="RGBA-相关"><a href="#RGBA-相关" class="headerlink" title="RGBA 相关"></a>RGBA 相关</h3><p>glColor系列函数，在参数类型不同时，表示“最大”颜色的值也不同<br>采用f和d做后缀的函数，以1.0表示最大的使用。<br>采用b做后缀的函数，以127表示最大的使用。<br>采用ub做后缀的函数，以255表示最大的使用。<br>采用s做后缀的函数，以32767表示最大的使用。<br>采用us做后缀的函数，以65535表示最大的使用。</p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Juhezi</h4>
+    <p>A coder who want to make this world better.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/09/29/gl0x00/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/09/29/gl0x00/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/09/29/gl0x00/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/09/16/CookieAndSession/">
+        Cookie 和 Session →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Juhezi's blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
