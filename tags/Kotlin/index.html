@@ -40,6 +40,39 @@
   <article class="post">
     <header class="post-header">
       <span class="post-meta">
+      <time datetime="2017-10-09T06:37:17.000Z" itemprop="datePublished">
+          2017-10-09
+      </time>
+    
+    
+    | 
+    <a href='/tags/Kotlin/'>Kotlin</a>
+    
+    
+</span>
+      <h2 class="post-title"><a href="/2017/10/09/kotlin-carrying/">kotlin 函数柯里化(Carrying)</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      
+        
+柯里化 (Currying) 指的是将一个接收多个参数的函数分解成多个接收单个参数的函数的一种技术。
+
+然而 Kotlin 目前并没有提供这种操作，所以，我们只能自己实现。
+123fun &lt;P1, P2, P3, R&gt; Function3&lt;P1, P2, P3, R&gt;.currying():        (p1: P1) -&gt; (p2: P2) -&gt; (p3: P3) -&gt; R       
+      
+      </p>
+      
+      <p>
+          <a href="/2017/10/09/kotlin-carrying/" class="excerpt-link">Read More...</a>
+      </p>
+      
+    </section>
+  </article>
+  
+  <article class="post">
+    <header class="post-header">
+      <span class="post-meta">
       <time datetime="2017-05-18T15:12:52.000Z" itemprop="datePublished">
           2017-05-18
       </time>

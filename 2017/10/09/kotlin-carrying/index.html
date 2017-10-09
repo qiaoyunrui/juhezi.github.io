@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>kotlin 函数柯里化(Carrying) | Juhezi&#39;s blog</title>
+  <meta name="description" content="I am a slow walker, but I never walk backwards." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="http://i2.muimg.com/588926/2b80267e202416bc.png" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Juhezi's blog">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://wx1.sinaimg.cn/mw690/005TG3l2ly1fhh87jgt9ij33341qgnnz.jpg)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://i2.muimg.com/588926/2b80267e202416bc.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Juhezi's blog</h1>
+            <h2 class="blog-description">I am a slow walker, but I never walk backwards.</h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-10-09T06:37:17.000Z" itemprop="datePublished">
+          2017-10-09
+      </time>
+    
+    
+    | 
+    <a href='/tags/Kotlin/'>Kotlin</a>
+    
+    
+</span>
+    <h1 class="post-title">kotlin 函数柯里化(Carrying)</h1>
+    <section class="post-content">
+      <blockquote>
+<p>柯里化 (Currying) 指的是将一个接收多个参数的函数分解成多个接收单个参数的函数的一种技术。</p>
+</blockquote>
+<p>然而 Kotlin 目前并没有提供这种操作，所以，我们只能自己实现。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;P1, P2, P3, R&gt;</span> Function3<span class="type">&lt;P1, P2, P3, R&gt;</span>.<span class="title">currying</span><span class="params">()</span></span>:</div><div class="line">        (p1: P1) -&gt; (p2: P2) -&gt; (p3: P3) -&gt; R</div><div class="line">        = <span class="function"><span class="title">fun</span><span class="params">(p1: <span class="type">P1</span>)</span></span> = <span class="function"><span class="title">fun</span><span class="params">(p2: <span class="type">P2</span>)</span></span> = <span class="function"><span class="title">fun</span><span class="params">(p3: <span class="type">P3</span>)</span></span> = <span class="keyword">this</span>(p1, p2, p3)</div></pre></td></tr></table></figure>
+<p>Sample:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">calculate</span><span class="params">(x: <span class="type">Int</span>, y: <span class="type">Int</span>, z: <span class="type">Int</span>)</span></span> = x * y + z</div><div class="line"><span class="keyword">val</span> curriedCalculate = ::calculate.currying()</div><div class="line"><span class="keyword">val</span> tempCalculate = (::calculate.currying())(<span class="number">2</span>)(<span class="number">2</span>)</div><div class="line"></div><div class="line">println(calculate(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>))</div><div class="line">println(curriedCalculate(<span class="number">2</span>)(<span class="number">2</span>)(<span class="number">2</span>))</div><div class="line">println(tempCalculate(<span class="number">2</span>))</div></pre></td></tr></table></figure>
+<p>Output:<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">6</span></div><div class="line"><span class="number">6</span></div><div class="line"><span class="number">6</span></div></pre></td></tr></table></figure></p>
+<p>相对应的，也可以写一个反柯里化的函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;P1, P2, P3, R&gt;</span> Function1<span class="type">&lt;P1, (p2: P2) -&gt;</span> <span class="params">(p3: <span class="type">P3</span>)</span></span> -&gt; R&gt;.uncurrying():</div><div class="line">        (p1: P1, p2: P2, p3: P3) -&gt; R</div><div class="line">        = <span class="function"><span class="title">fun</span><span class="params">(p1: <span class="type">P1</span>, p2: <span class="type">P2</span>, p3: <span class="type">P3</span>)</span></span> = <span class="keyword">this</span>(p1)(p2)(p3)</div></pre></td></tr></table></figure>
+<p>Sample:<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> newCalculate = curriedCalculate.uncurrying()</div><div class="line">println(newCalculate(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>))</div></pre></td></tr></table></figure></p>
+<p>Output:<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">6</span></div></pre></td></tr></table></figure></p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Juhezi</h4>
+    <p>A coder who want to make this world better.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/10/09/kotlin-carrying/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/10/09/kotlin-carrying/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/10/09/kotlin-carrying/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/09/29/gl0x00/">
+        gl0x00 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Juhezi's blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
