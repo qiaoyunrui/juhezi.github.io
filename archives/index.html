@@ -58,7 +58,8 @@
         
 带有预绑定形参的闭包叫做柯里化闭包（Curried Closure）。当对一个闭包调用curry()时，就是要求预先绑定某些形参。在预先绑定一个形参之后，调用闭包时就不必重复为这个形参提供实参了。
 
-Sample12345678910def tellFortunes(closure) &#123;    Date date = new Date("09/20/2012")    postFortune = closure.curry(
+可以使用curry()方法柯里化任意多个参数，但这些形参必须是从前面开始的连续若干个。也就是说，如果有 n 个形参，可以任意柯里化前 k 个，其中 0 &lt;= k &lt;= n。
+如果想柯里化后面的形参，可以使用 rcurry() 
       
       </p>
       
@@ -144,9 +145,9 @@ Sample12345678910def tellFortunes(closure) &#123;    Date date = new Date("09/20
     
     
     | 
-    <a href='/tags/Http/'>Http</a>,
+    <a href='/tags/Note/'>Note</a>,
     
-    <a href='/tags/Note/'>Note</a>
+    <a href='/tags/Http/'>Http</a>
     
     
 </span>
@@ -352,9 +353,9 @@ ISN可看作是一个32比特的计数器，每4ms加1。这样选择序号的�
     
     
     | 
-    <a href='/tags/Note/'>Note</a>,
+    <a href='/tags/Clojure/'>Clojure</a>,
     
-    <a href='/tags/Clojure/'>Clojure</a>
+    <a href='/tags/Note/'>Note</a>
     
     
 </span>
