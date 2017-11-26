@@ -40,6 +40,38 @@
   <article class="post">
     <header class="post-header">
       <span class="post-meta">
+      <time datetime="2017-11-26T12:38:37.000Z" itemprop="datePublished">
+          2017-11-26
+      </time>
+    
+    
+    | 
+    <a href='/tags/Groovy/'>Groovy</a>
+    
+    
+</span>
+      <h2 class="post-title"><a href="/2017/11/26/groovy-curry/">Groovy 中的柯里化闭包</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      
+        
+带有预绑定形参的闭包叫做柯里化闭包（Curried Closure）。当对一个闭包调用curry()时，就是要求预先绑定某些形参。在预先绑定一个形参之后，调用闭包时就不必重复为这个形参提供实参了。
+
+Sample12345678910def tellFortunes(closure) &#123;    Date date = new Date("09/20/2012")    postFortune = closure.curry(
+      
+      </p>
+      
+      <p>
+          <a href="/2017/11/26/groovy-curry/" class="excerpt-link">Read More...</a>
+      </p>
+      
+    </section>
+  </article>
+  
+  <article class="post">
+    <header class="post-header">
+      <span class="post-meta">
       <time datetime="2017-10-09T06:37:17.000Z" itemprop="datePublished">
           2017-10-09
       </time>
@@ -112,9 +144,9 @@
     
     
     | 
-    <a href='/tags/Note/'>Note</a>,
+    <a href='/tags/Http/'>Http</a>,
     
-    <a href='/tags/Http/'>Http</a>
+    <a href='/tags/Note/'>Note</a>
     
     
 </span>
@@ -320,9 +352,9 @@ ISN可看作是一个32比特的计数器，每4ms加1。这样选择序号的�
     
     
     | 
-    <a href='/tags/Clojure/'>Clojure</a>,
+    <a href='/tags/Note/'>Note</a>,
     
-    <a href='/tags/Note/'>Note</a>
+    <a href='/tags/Clojure/'>Clojure</a>
     
     
 </span>
@@ -341,46 +373,6 @@ ISN可看作是一个32比特的计数器，每4ms加1。这样选择序号的�
       
       <p>
           <a href="/2017/08/02/clojuredatatype/" class="excerpt-link">Read More...</a>
-      </p>
-      
-    </section>
-  </article>
-  
-  <article class="post">
-    <header class="post-header">
-      <span class="post-meta">
-      <time datetime="2017-07-24T16:07:54.000Z" itemprop="datePublished">
-          2017-07-25
-      </time>
-    
-    
-    | 
-    <a href='/tags/Clojure/'>Clojure</a>,
-    
-    <a href='/tags/Note/'>Note</a>
-    
-    
-</span>
-      <h2 class="post-title"><a href="/2017/07/25/ClojureCollection/">Clojure 中的集合与数据结构</a></h2>
-    </header>
-    <section class="post-excerpt">
-      <p>
-      
-        map、vector、set 和列表是 Clojure 提供的基本数据类型。Clojure 为它们提供了便利的字面量：
-
-‘(a b :name 12.5)         ;; 列表
-[‘a ‘b :name 12.5]        ;; vector
-{:name “Hello” :age 31}   ;; map
-#{1 2 3}                  ;; set
-
-Clojure 中的数据结构有两个特色：
-
-数据
-      
-      </p>
-      
-      <p>
-          <a href="/2017/07/25/ClojureCollection/" class="excerpt-link">Read More...</a>
       </p>
       
     </section>

@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <title>Cookie 和 Session | Juhezi&#39;s blog</title>
+  <title>Groovy 中的柯里化闭包 | Juhezi&#39;s blog</title>
   <meta name="description" content="I am a slow walker, but I never walk backwards." />
   <meta name="HandheldFriendly" content="True" />
   <meta name="MobileOptimized" content="320" />
@@ -39,27 +39,23 @@
 <main class="content" role="main">
   <article class="post">
     <span class="post-meta">
-      <time datetime="2017-09-16T06:25:04.000Z" itemprop="datePublished">
-          2017-09-16
+      <time datetime="2017-11-26T12:38:37.000Z" itemprop="datePublished">
+          2017-11-26
       </time>
     
     
     | 
-    <a href='/tags/Http/'>Http</a>,
-    
-    <a href='/tags/Note/'>Note</a>
+    <a href='/tags/Groovy/'>Groovy</a>
     
     
 </span>
-    <h1 class="post-title">Cookie 和 Session</h1>
+    <h1 class="post-title">Groovy 中的柯里化闭包</h1>
     <section class="post-content">
-      <h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>Cookie 技术通过在请求和响应报文中写入 Cookie 信息来控制客户端的状态。</p>
-<p>Cookie 会根据从服务端发送的响应报文内的一个叫做 Set-Cookie 的首部字段信息，通知客户端保存 Cookie。当下次客户端再往服务器发送请求的时候，客户端会自动在请求报文中加入 Cookie 值后发送出去。</p>
-<p>服务器端发现客户端发送过来的 Cookie 后，会去检查究竟是从哪一个客户端发送来的请求，然后对比服务器上的记录，最后得到之前的状态信息。</p>
-<h4 id="关于-Cookie-的首部字段"><a href="#关于-Cookie-的首部字段" class="headerlink" title="关于 Cookie 的首部字段"></a>关于 Cookie 的首部字段</h4><table border="1"><br><tr><br>  <th>首部字段名</th><br>  <th>说明</th><br>  <th>首部类型</th><br></tr><br><tr><br>  <td>Set-Cookie</td><br>  <td>开始状态管理所使用的 Cookie 信息</td><br>  <td>响应首部字段</td><br></tr><br><tr><br>  <td>Cookie</td><br>  <td>服务器接收的 Cookie 信息</td><br>  <td>请求首部字段</td><br></tr><br></table>
-
-<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>Session 是无状态的 HTTP 协议下，服务端记录用户状态时用于标识具体用户的机制。它是在服务端保存的用跟踪用户的状态的数据结构，可以保存在文件、数据库或集群中。在浏览器关闭后这次的 Session 就消失了，下次打开就不再拥有这个 Session。其实并不是 Session 消失了，而是 Session ID 变了，服务器端可能还是保存着上次的 Session ID 以及其 Session 信息，只是它们是无主状态，也许一段时间后会被删除。</p>
-<p>目前大多数的应用都是用 Cookie 实现 Session 跟踪的。第一次创建 Session 时服务端会通过在 HTTP 协议中反馈到客户端，需要在 Cookie 中记录一个 Session ID，以便今后每次请求时都可分辨你是谁。</p>
+      <blockquote>
+<p>带有预绑定形参的闭包叫做柯里化闭包（Curried Closure）。当对一个闭包调用<code>curry()</code>时，就是要求预先绑定某些形参。在预先绑定一个形参之后，调用闭包时就不必重复为这个形参提供实参了。</p>
+</blockquote>
+<h2 id="Sample"><a href="#Sample" class="headerlink" title="Sample"></a>Sample</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">def</span> tellFortunes(closure) &#123;</div><div class="line">    Date date = <span class="keyword">new</span> Date(<span class="string">"09/20/2012"</span>)</div><div class="line">    postFortune = closure.curry(date)</div><div class="line">    postFortune <span class="string">"Your day is filled with ceremony"</span></div><div class="line">    postFortune <span class="string">"You are features, not bugs"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">tellFortunes() &#123;date,fortune -&gt;</div><div class="line">    println <span class="string">"Fortune for $&#123;date&#125; is '$&#123;fortune&#125;'"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>Output</em><br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Fortune <span class="keyword">for</span> Thu Sep <span class="number">20</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> CST <span class="number">2012</span> is <span class="string">'Your day is filled with ceremony'</span></div><div class="line">Fortune <span class="keyword">for</span> Thu Sep <span class="number">20</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> CST <span class="number">2012</span> is <span class="string">'You are features, not bugs'</span></div></pre></td></tr></table></figure></p>
 
     </section>
     <footer class="post-footer">
@@ -69,15 +65,15 @@
 </section>
       <section class="share">
     <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/09/16/CookieAndSession/"
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/11/26/groovy-curry/"
        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
         <span class="hidden">Twitter</span>
     </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/09/16/CookieAndSession/"
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/11/26/groovy-curry/"
        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
         <span class="hidden">Facebook</span>
     </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/09/16/CookieAndSession/"
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/11/26/groovy-curry/"
        onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
         <span class="hidden">Google+</span>
     </a>
@@ -86,14 +82,10 @@
   </article>
   <nav class="pagination" role="pagination">
     
-    <a class="newer-posts" href="/2017/09/29/gl0x00/">
-        ← gl0x00
-    </a>
-    
     <span class="page-number">•</span>
     
-    <a class="older-posts" href="/2017/08/08/tcp-re-send/">
-        TCP的超时与重传 →
+    <a class="older-posts" href="/2017/10/09/kotlin-carrying/">
+        kotlin 函数柯里化(Carrying) →
     </a>
     
 </nav>
