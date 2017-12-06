@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <title>Tag: git | Juhezi&#39;s blog</title>
+  <title>Tag: Git | Juhezi&#39;s blog</title>
   <meta name="description" content="I am a slow walker, but I never walk backwards." />
   <meta name="HandheldFriendly" content="True" />
   <meta name="MobileOptimized" content="320" />
@@ -40,28 +40,36 @@
   <article class="post">
     <header class="post-header">
       <span class="post-meta">
-      <time datetime="2017-12-06T07:32:36.000Z" itemprop="datePublished">
-          2017-12-06
+      <time datetime="2017-07-12T08:09:32.000Z" itemprop="datePublished">
+          2017-07-12
       </time>
     
     
     | 
-    <a href='/tags/git/'>git</a>
+    <a href='/tags/Git/'>Git</a>
     
     
 </span>
-      <h2 class="post-title"><a href="/2017/12/06/git-cherry-pick/">git cherry-pick</a></h2>
+      <h2 class="post-title"><a href="/2017/07/12/git-merge-rebase/">代码合并：Merge & Rebase</a></h2>
     </header>
     <section class="post-excerpt">
       <p>
       
-        git cherry-pick: Apply the changes introduced by some existing commits.
-USAGE1234git cherry-pick [--edit] [-n] [-m parent-number] [-s][-x] [--ff][-S[&lt;keyid&gt;]] &lt;commit&gt;…​git cherry-pick --continuegit cherry-pi
+        
+首先你要明白，git merge和git rebase做的事是一样的，都是将一个分支的更改并入另一个分支，只不过方式有些不同。
+
+讲 Merge 和 Rebase 之前，我们构建一个使用场景。
+如图是我们现在的状态：
+
+我们的目的是把juhezi分支的更改合并到master分支上。
+Merge将 juhezi 分支合并到 master 分支是使用下面的命令：
+12git checkout mastergit merge juhezi
+
       
       </p>
       
       <p>
-          <a href="/2017/12/06/git-cherry-pick/" class="excerpt-link">Read More...</a>
+          <a href="/2017/07/12/git-merge-rebase/" class="excerpt-link">Read More...</a>
       </p>
       
     </section>
@@ -85,18 +93,6 @@ USAGE1234git cherry-pick [--edit] [-n] [-m parent-number] [-s][-x] [--ff][-S[&lt
 </footer>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
-<script type="text/javascript" src="/js/index.js"></script>
-
-
-
-
-
-
-</body>
-</html>
-rc="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <script type="text/javascript" src="/js/jquery.fitvids.js"></script>
 <script type="text/javascript" src="/js/index.js"></script>
